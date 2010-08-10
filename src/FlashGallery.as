@@ -58,7 +58,7 @@ package
 			if (this.loaderInfo.parameters.xmlURL) {
 				_xmlURL = this.loaderInfo.parameters.xmlURL;
 			} else {
-				_xmlURL = "http://media.socialvi.be/m/svnetwork/homepage.xml";
+				_xmlURL = "http://media.socialvi.be.s3.amazonaws.com/m/svnetwork/network_old.xml";
 			}
 			
 			_model = ImageSingleton.instance;

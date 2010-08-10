@@ -2,13 +2,16 @@ package com.visual
 {
 	import com.greensock.TweenNano;
 	
+	import flash.display.AVM1Movie;
 	import flash.display.Bitmap;
+	import flash.display.DisplayObject;
 	import flash.display.Loader;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.net.URLRequest;
 	import flash.system.LoaderContext;
+	import flash.utils.ByteArray;
 	
 	public class ImageHolder extends Sprite
 	{
@@ -43,17 +46,23 @@ package com.visual
 			
 			//RESIZE
 			//MAXHEIGHT=183;
-			var image:Sprite = new Sprite();
+			
+			var image:DisplayObject = new Sprite();
 			if (_imageURL.toLowerCase().indexOf(".swf") < 0) {
-				var ditty:Bitmap =_loader.content as Bitmap 
-				image.addChild( ditty);
+				var ditty:Bitmap = _loader.content as Bitmap;
+				(image as Sprite).addChild( ditty);
 				ditty.smoothing =true;
 				ditty.cacheAsBitmap = true;
 			} else {
-				image.addChild( _loader.content as MovieClip);
+				/*var ba:ByteArray = _loader.content as ByteArray;
+				var _swfLoader:Loader = new Loader();
+				_swfLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onByteArrayLoaded);
+				_swfLoader.loadBytes(ba);*/
+				
+				(image as Sprite).addChild(_loader.content.parent);
 			}
 			
-			/*
+			
 			var ratio:Number = image.width/image.height;
 			image.width = 183 * ratio;
 			image.height = 183;
@@ -63,7 +72,7 @@ package com.visual
 				image.height = 290*ratio;
 				image.width = 290;
 			}
-			*/
+			
 			
 			//image.x = - (image.width  * image.scaleX)/2;
 			//image.y = - (image.height * image.scaleY)/2;
@@ -80,6 +89,11 @@ package com.visual
 			
 			image.alpha = 0;
 			TweenNano.to(image, 1, {alpha: 1});
+		}
+		
+		private function onByteArrayLoaded(e:Event):void
+		{
+			
 		}
 		
 		public function get depth():Number { return _depth; }
